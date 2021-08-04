@@ -12,7 +12,7 @@ ZIP := $(NAME)-$(KERNELVERSION)-$(DEVICE)-$(DATE)-$(VERSION).zip
 
 EXCLUDE := Makefile *.git* *.jar* *placeholder* *.md*
 
-normal: $(ZIP)
+zip: $(ZIP)
 
 $(ZIP):
 	@echo "Creating ZIP: $(ZIP)"
