@@ -1,0 +1,7 @@
+# ignore kernel images
+dtbo.img
+Image*
+zImage
+
+# ignore zips and sha files
+*.zip*
