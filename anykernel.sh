@@ -37,7 +37,7 @@ dump_boot; # use split_boot to skip ramdisk unpack, e.g. for devices with init_b
 
 if [ -d /data/adb/modules/parallax-kernel ]; then
   ui_print ""
-  ui_print "Parallax Profiles installation found, removing"
+  ui_print " • Parallax Profiles installation found, removing"
   rm -rf /data/adb/modules/parallax-kernel
 fi
 cp $home/parallax-kernel/image/Image.gz-dtb $home/Image.gz-dtb;
@@ -46,7 +46,7 @@ if mountpoint -q /data; then
   # Optimize F2FS extension list (@arter97)
   for list_path in $(find /sys/fs/f2fs* -name extension_list); do
 
-    ui_print "  • Optimizing F2FS extension list"
+    ui_print " • Optimizing F2FS extension list"
     echo "Updating extension list: $list_path"
 
     echo "Clearing extension list"
