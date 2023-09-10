@@ -7,24 +7,25 @@ DATE := $(shell date "+%Y%m%d-%H%M")
 #Device Name
 DEVICE := RMX1921
 
+
 # Check if required arguments are provided
-ifeq ($(strip $(BUILD_VERSION)),)
-$(error BUILD_VERSION is not defined.)
-endif
-
-ifeq ($(strip $(RELEASE_BUILD)),)
-$(error RELEASE_BUILD is not defined.)
-endif
-
-ifeq ($(strip $(COMPILER)),)
-$(error COMPILER is not defined.)
+ifeq ($(filter zip,$(MAKECMDGOALS)),zip)
+	ifeq ($(strip $(RELEASE_BUILD)),)
+		$(error RELEASE_BUILD is not defined.)
+	endif
+	ifeq ($(strip $(BUILD_VERSION)),)
+		$(error BUILD_VERSION is not defined.)
+	endif
+	ifeq ($(strip $(COMPILER)),)
+		$(error COMPILER is not defined.)
+	endif
 endif
 
 #Zip Name format, $RELEASE_BUILD, $COMPILER and $BUILD_VERSION handled by build script
 ifeq ($(RELEASE_BUILD),1)
-ZIP := $(NAME)-$(BUILD_VERSION)-$(DEVICE)-$(DATE)
+	ZIP := $(NAME)-$(BUILD_VERSION)-$(DEVICE)-$(DATE)
 else
-ZIP := $(NAME)-$(DEVICE)-$(COMPILER)-$(DATE)-$(BUILD_VERSION)
+	ZIP := $(NAME)-$(DEVICE)-$(COMPILER)-$(DATE)-$(BUILD_VERSION)
 endif
 
 #Files to be excluded while zipping
