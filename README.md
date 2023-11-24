@@ -111,7 +111,7 @@ __"before|after"__ requires you simply specify __"before"__ or __"after"__ for t
 
 __"block|mount|fstype|options|flags"__ requires you specify which part (listed in order) of the fstab entry you want to check and alter.
 
-_dump_boot_ and _write_boot_ are the default method of unpacking/repacking, but for more granular control, or omitting ramdisk changes entirely ("OG AK" mode), these can be separated into _split_boot; unpack_ramdisk_ and _repack_ramdisk; flash_boot_ respectively. _flash_generic_ can be used to flash an image to the corresponding partition. It is automatically included for dtbo and vendor_dlkm in _write_boot_ but can be called separately if using "OG AK" mode or creating a simple partition flashing only zip.
+_dump_boot_ and _write_boot_ are the default method of unpacking/repacking, but for more granular control, or omitting ramdisk changes entirely ("OG AK" mode), these can be separated into _split_boot; unpack_ramdisk_ and _repack_ramdisk; flash_boot_ respectively. _flash_generic_ can be used to flash an image to the corresponding partition. It is automatically included for dtbo, system_dlkm and vendor_dlkm in _write_boot_ but can be called separately if using "OG AK" mode or creating a simple partition flashing only zip.
 
 Multi-partition zips can be created by removing the ramdisk and patch folders from the zip and including instead "-files" folders named for the partition (without slot suffix), e.g. boot-files + recovery-files, or kernel-files + ramdisk-files (on some Treble devices). These then contain Image.gz, and ramdisk, patch, etc. subfolders for each partition. To setup for the next partition, simply set `block=` (without slot suffix) and `ramdisk_compression=` for the new target partition and use the _reset_ak_ command.
 
@@ -137,14 +137,14 @@ Optional supported binaries which may be placed in /tools to enable built-in exp
 * `elftool` (with `unpackelf`) - Sony ELF kernel.elf format support, repacking as ELF for older Sony devices
 * `mkmtkhdr` (with `unpackelf`) - MTK device boot image section headers support for Sony devices
 * `futility` + `chromeos` test keys directory - Google ChromeOS signature support
-* `boot_signer-dexed.jar` + `avb` keys directory - Google Android Verified Boot 1.0 (AVBv1) custom signature support (deprecated/use with caution)
+* `boot_signer-dexed.jar` (deprecated) + `avb` keys directory - Google Android Verified Boot 1.0 (AVBv1) custom signature support
 * `rkcrc` - Rockchip KRNL ramdisk image support
 
 Optionally moving ARM builds to tools/arm and putting x86 builds in tools/x86 will enable architecture detection for use with broad, device non-specific zips.
 
 ## // Instructions ##
 
-1. Place final kernel build product, e.g. Image.gz-dtb or zImage to name a couple, in the zip root (any separate dt, dtb or recovery_dtbo, dtbo and/or vendor_dlkm should also go here for devices that require custom ones, each will fallback to the original if not included)
+1. Place final kernel build product, e.g. Image.gz-dtb or zImage to name a couple, in the zip root (any separate dt, dtb or recovery_dtbo, dtbo, system_dlkm and/or vendor_dlkm should also go here for devices that require custom ones, each will fallback to the original if not included)
 
 2. Place any required ramdisk files in /ramdisk (/vendor_ramdisk for simple multi-partition vendor_boot v3 support) and module files in /modules (with the full path like /modules/system/lib/modules)
 
